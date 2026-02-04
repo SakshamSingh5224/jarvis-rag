@@ -1,0 +1,24 @@
+services:
+  api:
+    build:
+      context: ./backend
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  ui:
+    build:
+      context: ./ui
+    env_file:
+      - ./.env
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    volumes:
+      - ./ui:/app
